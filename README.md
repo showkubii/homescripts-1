@@ -103,10 +103,10 @@ This is located over here if you want to request help or compile from source [me
 
 I found unionfs to not do what I wanted and I can't stand the hidden files so for my, it's much easier to configure and use mergerfs.
 
-The following options make it always write to the first disk in the mount:
+The following options make it always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
 ```bash
-Options = defaults,sync_read,auto_cache,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff
+Options = sync_read,use_ino,allow_other,auto_cache,splice_move,splice_read,splice_write,func.getattr=newest,category.action=all,category.create=ff
 ```
 
 Important items:
