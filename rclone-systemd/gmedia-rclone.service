@@ -9,12 +9,13 @@ Environment=RCLONE_CONFIG=/opt/rclone/rclone.conf
 
 ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --allow-other \
+--buffer-size 1G \
 --dir-cache-time 96h \
---drive-chunk-size 32M \
 --log-level INFO \
 --log-file /opt/rclone/logs/rclone.log \
 --timeout 1h \
 --umask 002 \
+--user-agent animosityapp \
 --rc
 ExecStop=/bin/fusermount -uz /GD
 Restart=on-failure
