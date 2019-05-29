@@ -71,6 +71,8 @@ My mount settings and why I use them:
 # This allows other users than the one mounting it to access the data
 # and needs to be used in conjunction with the /etc/fuse.conf config earlier
 --allow-other \
+# I have extra memory on my system so buffer size can be used as it can help with direct playing. It can be set based on your system memory.
+--buffer-size 1G \
 # This is the time I want to store the directory and file structure in memory.
 # It will invalidate it if changes are detected so bigger the better
 --dir-cache-time 96h \
@@ -106,12 +108,14 @@ I found unionfs to not do what I wanted and I can't stand the hidden files so fo
 The following options make it always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
 ```bash
-Options = sync_read,use_ino,allow_other,auto_cache,splice_move,splice_read,splice_write,func.getattr=newest,category.action=all,category.create=ff
+Options = async_read=false,use_ino,allow_other,auto_cache,func.getattr=newest,category.action=all,category.create=ff
 ```
 
 Important items:
 
-- sync_read as rclone is default built with this and is required for proper streaming
+- async_read=false is needed as rclone uses sync_read.
+- use_ino is for hard linking with Sonarr/Radarr.
+- auto_cache uses memory for caching and helps out a bit if you have extra memory to spare.
 - category.action=all,category.create=ff says to always create directories / files on the first listed mount point and for my configuration that is my /data/local
 - if you are reading directly from your rclone mount, you do not need to worry about any of the mergerfs settings.
 
