@@ -7,7 +7,7 @@ RequiresMountsFor=/data
 What = /data/local:/GD
 Where = /gmedia
 Type = fuse.mergerfs
-Options = async_read=false,use_ino,allow_other,auto_cache,func.getattr=newest,category.action=all,category.create=ff
+Options = async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=auto-full
 
 [Install]
 WantedBy=multi-user.target
