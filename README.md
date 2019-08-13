@@ -76,9 +76,6 @@ My mount settings and why I use them:
 # This is the time I want to store the directory and file structure in memory.
 # It will invalidate it if changes are detected so bigger the better
 --dir-cache-time 96h \
-# This is set beacues of a few tests in terms of the sweet spot for uploading
-# files as I do not upload on my mount normally.
---drive-chunk-size 32M \
 # This shows the level level
 --log-level INFO \
 # This is where I write my log files to
@@ -108,14 +105,14 @@ I found unionfs to not do what I wanted and I can't stand the hidden files so fo
 The following options make it always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
 ```bash
-Options = async_read=false,use_ino,allow_other,auto_cache,func.getattr=newest,category.action=all,category.create=ff
+Options = async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=auto-full
 ```
 
 Important items:
 
 - async_read=false is needed as rclone uses sync_read.
 - use_ino is for hard linking with Sonarr/Radarr.
-- auto_cache uses memory for caching and helps out a bit if you have extra memory to spare.
+- auto_cache has been replaced by cache.files=auto-full and uses memory for caching and helps out a bit if you have extra memory to spare.
 - category.action=all,category.create=ff says to always create directories / files on the first listed mount point and for my configuration that is my /data/local
 - if you are reading directly from your rclone mount, you do not need to worry about any of the mergerfs settings.
 
@@ -142,7 +139,7 @@ These tips and more for Linux can be found at the [Plex Forum Linux Tips](https:
 
 ## Caddy Proxy Server
 
-I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. I removed Caddy from my Plex configuration to remove one layer of complexity as it did not seem to be needed anymore.
+I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. 
 
 My configuration is [here](https://github.com/animosity22/homescripts/blob/master/PROXY.MD)
 
