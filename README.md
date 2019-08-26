@@ -6,7 +6,7 @@ This is my configuration that works for me the best for my use case of an all in
 
 - Verizon Gigabit FIOS
 - Google Drive with an Encrypted Media Folder
-- Arch Linux
+- Ubuntu Linux 18.04
 - Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
 - 32 GB of Memory
 - 250 GB SSD Storage for my root
@@ -19,20 +19,21 @@ I use Sonarr and Radarr in conjuction with NZBGet and ruTorrent/rtorrent to get 
 ## Rclone and MergerFS
 
 ### Installation
-
-The installation has shifted to Arch Linux as I changed from Debian over to that with the first step installing yay as my AUR helper. These steps are all done as a non root user.
-
-```
-$ sudo pacman -S git
-$ git clone https://aur.archlinux.org/yay.git
-$ cd yay
-$ makepkg -si
-```
-
-Once yay is installed, I use that for all my installations.
+My Ubuntu setup:
 
 ```
-$ yay -S fuse
+[felix@gemini ~]$ lsb_release -a
+No LSB modules are available.
+Distributor ID:	Ubuntu
+Description:	Ubuntu 18.04.3 LTS
+Release:	18.04
+Codename:	bionic
+```
+
+Fuse needs to be installed.
+
+```
+$ sudo apt install fuse
 ```
 	
 You need to make the change to /etc/fuse.conf to allow_other by uncommenting the last line by and remove the # from the last line.
@@ -48,9 +49,7 @@ You need to make the change to /etc/fuse.conf to allow_other by uncommenting the
 	# Allow non-root users to specify the allow_other or allow_root mount options.
 	user_allow_other
 	
-After fuse is installed, I install mergerfs as it's already part of the repositories for Arch Linux.
-
-	$ yay -S mergerfs
+After fuse is installed, I install mergerfs. I would grab the proper package from the github repository as the packages are out of date.
 
 My use case for mergerfs is that I always want to write to the local disk first and all my applications (Sonarr/Radarr/rTorrent/Plex/Emby/etc) all point directly to /gmedia. For them it's not relevant if the file is local or remote as they should act the same.
 
@@ -71,8 +70,6 @@ My mount settings and why I use them:
 # This allows other users than the one mounting it to access the data
 # and needs to be used in conjunction with the /etc/fuse.conf config earlier
 --allow-other \
-# I have extra memory on my system so buffer size can be used as it can help with direct playing. It can be set based on your system memory.
---buffer-size 1G \
 # This is the time I want to store the directory and file structure in memory.
 # It will invalidate it if changes are detected so bigger the better
 --dir-cache-time 96h \
@@ -127,6 +124,8 @@ This is my cron entry:
 12 3 * * * /opt/rclone/scripts/upload_cloud
 ```
 
+This is my only upload to my Google Drive minus subtitles so I can this at 700GB per day to not hit the 750GB daily upload quota that is published by Google.
+
 ## Plex Tweaks
 If you have a lot of directories and files, it might be helpful to increase the file watchers by adding this to your /etc/sysctl.conf and rebooting. I choose the number below as I wanted to have plenty of capacity over the default.
 
@@ -136,6 +135,16 @@ fs.inotify.max_user_watches=262144
 ```
 
 These tips and more for Linux can be found at the [Plex Forum Linux Tips](https://forums.plex.tv/t/linux-tips/276247)
+
+## Reducing API USage / Save Download Quota
+There are a number of things I make sure are off in my setup to ensure that my API calls are lower and that I do not hit the download quotas for the day.
+
+### Plex
+- Enable Thumbnail previews - Off - This creates a full read of the file to generate the preview and is set per library that is setup
+- Perform extensive media analysis during maintenance - This is under scheduled tasks and this does a full download and is ony used for bandwidth analysis with streaming.
+
+### Sonarr/Radarr
+- Analyse video files - This does full downloads to perform analysis and should be off as this happens frequently on refreshes if left on.
 
 ## Caddy Proxy Server
 
