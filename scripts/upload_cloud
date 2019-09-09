@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # RClone Config file
 RCLONE_CONFIG=/opt/rclone/rclone.conf
 export RCLONE_CONFIG
@@ -7,4 +7,4 @@ export RCLONE_CONFIG
 if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then exit; fi
 
 # Move older local files to the cloud
-/usr/bin/rclone move /data/local/ gcrypt: --log-file /opt/rclone/logs/upload.log -v --drive-chunk-size 64M --exclude-from /opt/rclone/scripts/excludes --delete-empty-src-dirs --user-agent animosityapp --fast-list
+/usr/bin/rclone move /local/ gcrypt: --log-file /opt/rclone/logs/upload.log -v --exclude-from /opt/rclone/scripts/excludes --delete-empty-src-dirs --user-agent animosityapp --fast-list --max-transfer 700G
