@@ -6,17 +6,20 @@ After=network-online.target
 [Service]
 Type=notify
 Environment=RCLONE_CONFIG=/opt/rclone/rclone.conf
-
+KillMode=none
+RestartSec=5
 ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --allow-other \
---buffer-size 1G \
---dir-cache-time 96h \
+--attr-timeout 1000h \
+--buffer-size 128M \
+--dir-cache-time 1000h \
 --log-level INFO \
 --log-file /opt/rclone/logs/rclone.log \
 --timeout 1h \
 --umask 002 \
 --user-agent animosityapp \
---rc
+--rc \
+--rc-addr 127.0.0.1:5572
 ExecStop=/bin/fusermount -uz /GD
 Restart=on-failure
 User=felix

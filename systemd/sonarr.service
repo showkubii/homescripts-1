@@ -1,14 +1,15 @@
 [Unit]
-Description=Radarr Daemon
-After=syslog.target network.target
+Description=Sonarr Daemon
+Requires=gmedia.service
 Wants=network-online.target
+After=deluged.service nzbget.service
 
 [Service]
 User=felix
 Group=felix
 
 Type=simple
-ExecStart=/usr/bin/mono /opt/Radarr/Radarr.exe --nobrowser --data=/opt/radarrdata
+ExecStart=/usr/bin/mono /opt/Sonarr/Sonarr.exe --nobrowser --data=/opt/sonarrdata
 TimeoutStopSec=20
 KillMode=process
 Restart=always

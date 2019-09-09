@@ -1,8 +1,8 @@
 [Unit]
 Description=NZBGet Daemon
-After=network-online.target
-Wants=network-online.target
-RequiresMountsFor=/data
+Requires=gmedia.service
+After=gmedia.service
+RequiresMountsFor=/gmedia
 
 [Service]
 User=felix
