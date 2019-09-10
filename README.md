@@ -90,9 +90,9 @@ My mount settings and why I use them:
 They all get mounted up via my systemd scripts as it goes in order of mounting my rclone, running a fine to warm up the cache and the mergerfs mount last.
 
 My gmedia starts up items in order:
-1) [rclone mount](https://github.com/animosity22/homescripts/blob/master/rclone-systemd/gmedia-rclone.service) This is the standard rclone mount.
-2) [mergerfs mount](https://github.com/animosity22/homescripts/blob/master/rclone-systemd/gmedia.mount) This needs to be named the same as the mount point for the mount to work properly. I use /gmedia so the file is named accordingly.
-3) [find command](https://github.com/animosity22/homescripts/blob/master/rclone-systemd/gmedia-find.service) which justs caches the directory and file structure and provides me an output of the structure. This is not required but something I choose to do to warm up the cache. This fires and forgets as it takes ~30 seconds so I don't wait for it to complete.
+1) [rclone service](https://github.com/animosity22/homescripts/blob/master/systemd/rclone.service) This is the standard rclone mount.
+2) [mergerfs service](https://github.com/animosity22/homescripts/blob/master/systemd/gmedia.service) This needs to be named the same as the mount point for the mount to work properly. I use /gmedia so the file is named accordingly.
+3) [find command](https://github.com/animosity22/homescripts/blob/master/systemd/GD-find.service) which justs caches the directory and file structure and provides me an output of the structure. This is not required but something I choose to do to warm up the cache. This fires and forgets as it takes ~30 seconds so I don't wait for it to complete.
 
 ### mergerfs configuration
 This is located over here if you want to request help or compile from source [mergerfs@github](https://github.com/trapexit/mergerfs)
@@ -102,7 +102,7 @@ I found unionfs to not do what I wanted and I can't stand the hidden files so fo
 The following options make it always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
 ```bash
-Options = async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=auto-full
+-o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
 ```
 
 Important items:
@@ -148,7 +148,7 @@ There are a number of things I make sure are off in my setup to ensure that my A
 
 ## Caddy Proxy Server
 
-I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. 
+I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. I have this as a toggle as I at times use CloudFlare for a CDN.
 
 My configuration is [here](https://github.com/animosity22/homescripts/blob/master/PROXY.MD)
 
