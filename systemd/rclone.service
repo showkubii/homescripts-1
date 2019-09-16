@@ -15,6 +15,7 @@ ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --dir-cache-time 1000h \
 --log-level INFO \
 --log-file /opt/rclone/logs/rclone.log \
+--poll-interval 15s \
 --timeout 1h \
 --umask 002 \
 --user-agent animosityapp \
