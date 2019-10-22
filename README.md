@@ -2,6 +2,8 @@
 
 This is my configuration that works for me the best for my use case of an all in one media server. This is not meant to be a tutorial by any means as it does require some knowledge to get setup. I'm happy to help out as best as I can and welcome any updates/fixes/pulls to make it better and more helpful to others.
 
+Here is my change log: [Change Log](https://github.com/animosity22/homescripts/blob/master/Changes.MD)
+
 ## Home Configuration
 
 - Verizon Gigabit FIOS
@@ -62,30 +64,7 @@ My rclone.conf has an entry for the Google Drive connection and and encrypted fo
 
 My rclone looks like: [rclone.conf](https://github.com/animosity22/homescripts/blob/master/rclone.conf)
 
-My mount settings and why I use them:
-
-```
-# This is the standar mount with the remote and the mount point location
-/usr/bin/rclone mount gcrypt: /GD \
-# This allows other users than the one mounting it to access the data
-# and needs to be used in conjunction with the /etc/fuse.conf config earlier
---allow-other \
-# This is the time I want to store the directory and file structure in memory.
-# It will invalidate it if changes are detected so bigger the better
---dir-cache-time 96h \
-# This shows the level level
---log-level INFO \
-# This is where I write my log files to
---log-file /var/log/rclone.log \
-# This helps with pausing and resuming on Plex. It can be larger but 1h seemed
-# good for me
---timeout 1h \
-# This sets the default umask so user / group / other have permissions like 775.
---umask 002 \
-# This allows remote control and works with my other startup script that does
-# a RC command to refresh / warm up the dir-cache
---rc
-```
+This is my current rclone.service file which has the mount settings documented in it [rclone.service](https://github.com/animosity22/homescripts/blob/master/systemd/rclone.service)
 
 They all get mounted up via my systemd scripts as it goes in order of mounting my rclone, running a fine to warm up the cache and the mergerfs mount last.
 
