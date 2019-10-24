@@ -1,5 +1,99 @@
 # Caddy Proxy Server
 
+## Google Authentication
+
+For my build, I use this to get the plugins I use:
+```bash
+CADDY_TELEMETRY=on curl https://getcaddy.com | bash -s personal http.cache,http.cgi,http.jwt,http.login,http.realip,tls.dns.cloudflare
+```
+This allows me to use Google Authentication for my logins and CloudFlare for my automatic DNS updates for my hosts.
+
+I use proxy entries for all my items behind and Google oAuth for my login validation:
+
+```bash
+# apps servers with auth
+apps.host.com {
+root /opt/www
+browse
+gzip
+realip cloudflare
+log /opt/caddy/logs/apps.log
+tls {
+	dns cloudflare
+}
+jwt {
+    path /
+    redirect /login?backTo={rewrite_uri}
+    except /favicon.ico
+    allow email your@email.us
+    log-file /opt/caddy/logs/jwt.log
+    log-level info
+}
+
+  login {
+    redirect_check_referer false
+    google client_id=yourcliendid.apps.googleusercontent.com,client_secret=yourclientsecret,scope=https://www.googleapis.com/auth/userinfo.email
+    jwt_expiry 168h
+    cookie_expiry 2400h
+  }
+
+proxy /sonarr 127.0.0.1:8989 {
+  transparent
+	}
+
+proxy /radarr 127.0.0.1:7878 {
+  transparent
+	}
+
+proxy /tautulli 127.0.0.1:8181 {
+	transparent
+	}
+
+proxy /nzbget 127.0.0.1:9876 {
+	transparent
+	}
+
+proxy /jackett 127.0.0.1:9117 {
+	transparent
+	}
+
+proxy /grafana 127.0.0.1:3333 {
+	without /grafana
+	transparent
+	}
+
+proxy /netdata/ 192.168.1.30:19999 {
+	without /netdata
+	transparent
+	}
+
+proxy /router/ 192.168.1.1:19999 {
+	without /router
+	transparent
+	}
+
+proxy /jackett 127.0.0.1:9117 {
+	transparent
+	}
+
+proxy /bazaar 127.0.0.1:6767 {
+        transparent
+        }
+
+
+proxy /kitana 127.0.0.1:31337 {
+        transparent
+        }
+
+proxy /qbit 127.0.0.1:8080 {
+	transparent
+	without /qbit
+	}
+
+}
+```
+
+
 ## Caddy Plex Configuration
 
 I use [Caddy](https://github.com/mholt/caddy) as a proxy server and if you want to use it with Plex, there is a very simple config below that I used. I have since removed this from my config to help simplify things.
@@ -8,7 +102,7 @@ My plex configuration in my CaddyFile as follows:
 
 ```bash
 # Plex Server
-plex.animosity.us {
+plex.host.com {
 gzip
 timeouts 1h
 log /opt/caddy/logs/plex.log
