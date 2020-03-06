@@ -13,8 +13,8 @@ Group=felix
 
 ; Letsencrypt-issued certificates will be written to this directory.
 Environment=CADDYPATH=/opt/caddy/ssl
-Environment=CLOUDFLARE_API_KEY=419a8987dd57a81705965e1313a96d5ee412a
-Environment=CLOUDFLARE_EMAIL=earl.texter@gmail.com
+Environment=CLOUDFLARE_API_KEY=yourkey
+Environment=CLOUDFLARE_EMAIL=email@gmail.com
 
 ; Always set "-root" to something safe in case it gets forgotten in the Caddyfile.
 ExecStart=/usr/local/bin/caddy -log stdout -agree=true -conf=/opt/caddy/Caddyfile -root=/var/tmp -email felix@animosity.us
