@@ -5,7 +5,7 @@ Description=Tautulli - Stats for Plex Media Server usage
 User=felix
 Group=felix
 Type=simple
-ExecStart=/usr/bin/python2 /opt/Tautulli/PlexPy.py --nolaunch --nolaunch --config /opt/Tautulli/config.ini --datadir /opt/Tautulli
+ExecStart=/usr/bin/python2 /opt/Tautulli/PlexPy.py --nolaunch --config /opt/Tautulli/config.ini --datadir /opt/Tautulli
 
 [Install]
 WantedBy=default.target
