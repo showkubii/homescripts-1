@@ -2,7 +2,7 @@
 
 This is my configuration that works for me the best for my use case of an all in one media server. This is not meant to be a tutorial by any means as it does require some knowledge to get setup. I'm happy to help out as best as I can and welcome any updates/fixes/pulls to make it better and more helpful to others.
 
-Here is my change log: [Change Log](https://github.com/animosity22/homescripts/blob/master/Changes.MD)
+[Change Log](https://github.com/animosity22/homescripts/blob/master/Changes.MD)
 
 ## Home Configuration
 
@@ -16,7 +16,11 @@ Here is my change log: [Change Log](https://github.com/animosity22/homescripts/b
 
 ## My Workflow
 
-I use Sonarr and Radarr in conjuction with NZBGet and ruTorrent/rtorrent to get my media. My normal flow is that they grab a file, download it and place it in `/gmedia` under the correct spot of `/gmedia/TV` `/gmedia/Movies` respectively and that is local underneath the covers. Each night, a rclone upload scripts moves from local to my Google Drive.  To achieve this, I use rclone to mount my Google Drive and mergerfs to combine a local disk and Google Drive together to provide a single access point for all services.
+I use Sonarr and Radarr in conjuction with NZBGet and ruTorrent/rtorrent to get my media. 
+
+My normal flow is that they grab a file, download it and place it in `/gmedia` under the correct spot of `/gmedia/TV` `/gmedia/Movies` respectively and that is locally-stored underneath the covers.
+
+Each night, a rclone upload scripts moves from local to my Google Drive.  To achieve this, I use rclone to mount my Google Drive and mergerfs to combine a local disk and Google Drive together to provide a single access point for all the services.
 
 ## Rclone and MergerFS
 
