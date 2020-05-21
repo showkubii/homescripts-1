@@ -12,18 +12,6 @@ query="SELECT Library, Items \
                         WHERE library_section_id > 0 GROUP BY name );"
 sqlite3 -header -line "$db" "$query" | tee -a $logfile
 echo " " | tee -a
-echo "Time to watch" | tee -a $logfile
-query="SELECT Library, Minutes, Hours, Days \
-                        FROM ( SELECT name AS Library, \
-                        SUM(duration)/1000/60 AS Minutes, \
-                        SUM(duration)/1000/60/60 AS Hours, \
-                        SUM(duration)/1000/60/60/24 AS Days \
-                        FROM media_items m \
-                        LEFT JOIN library_sections l ON l.id = m.library_section_id \
-                        WHERE library_section_id > 0 GROUP BY name );"
-sqlite3 -header -line "$db" "$query" | tee -a $logfile
-
-echo " " | tee -a
 
 query="select count(*) from media_items"
 result=$(sqlite3 -header -line "$db" "$query")
@@ -41,10 +29,6 @@ query="SELECT count(*) FROM metadata_items WHERE deleted_at is not null"
 result=$(sqlite3 -header -line "$db" "$query")
 echo "${result:11} metadata_items marked as deleted" | tee -a $logfile
 
-#query="SELECT * FROM metadata_items WHERE deleted_at is not null"
-#result=$(sqlite3 -header -line "$db" "$query")
-#echo "${result:11} metadata_items marked as deleted" | tee -a $logfile
-
 query="SELECT count(*) FROM directories WHERE deleted_at is not null"
 result=$(sqlite3 -header -line "$db" "$query")
 echo "${result:11} directories marked as deleted" | tee -a $logfile
@@ -56,6 +40,8 @@ query="select count(*) from metadata_items meta \
                         and meta.metadata_type in (1, 4, 12) and part.file != '';"
 result=$(sqlite3 -header -line "$db" "$query")
 echo "${result:11} files missing deep analyzation info." | tee -a $logfile
+
+echo " " | tee -a
 
 query="select count(*) from media_parts mp join media_items mi on mi.id = mp.media_item_id where mi.library_section_id = 2 and mp.extra_data like '%intros=%';"
 result=$(sqlite3 -header -line "$db" "$query")
