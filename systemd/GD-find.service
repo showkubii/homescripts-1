@@ -5,8 +5,9 @@ After=rclone.service
 
 [Service]
 Type=simple
-
-ExecStart=/usr/bin/rclone rc vfs/refresh recursive=true --rc-addr 127.0.0.1:5572
+Environment=RCLONE_CONFIG=/opt/rclone/rclone.conf
+# I have the password listed here and you can change it. My setup is only internal so having this here does not matter for me
+ExecStart=/usr/bin/rclone rc vfs/refresh recursive=true --rc-addr 127.0.0.1:5572 --rc-user felix --rc-pass felix
 
 RemainAfterExit=yes
 User=felix
