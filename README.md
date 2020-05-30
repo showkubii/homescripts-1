@@ -57,7 +57,7 @@ You need to make the change to /etc/fuse.conf to allow_other by uncommenting the
 	
 After fuse is installed, I install mergerfs. I would grab the proper package from the GitHub repository as the packages are out of date.
 
-My use case for mergerfs is that I always want to write to the local disk first and all my applications (Sonarr/Radarr/rTorrent/Plex/Emby/etc) all point directly to `/gmedia`. For them it's not relevant if the file is local or remote as they should act the same.
+My use case for mergerfs is that I always want to write to the local disk first and all my applications (Sonarr/Radarr/Plex/Emby/any application) all point directly to `/gmedia`. For them it's not relevant if the file is local or remote as they should act the same.
 
   	/gmedia
         /data/local (local mirror disk)
