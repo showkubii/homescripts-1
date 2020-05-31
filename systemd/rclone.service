@@ -21,6 +21,7 @@ ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --vfs-read-chunk-size 32M \
 --async-read=false
 ExecStop=/bin/fusermount -uz /GD
+ExecStartPost=/usr/bin/rclone rc vfs/refresh recursive=true --rc-addr 127.0.0.1:5572 _async=true
 Restart=on-failure
 User=felix
 Group=felix
