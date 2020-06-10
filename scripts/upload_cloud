@@ -8,5 +8,5 @@ export RCLONE_USER_AGENT
 #exit if running
 if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then exit; fi
 
-# Move older local files to the cloud
-/usr/bin/rclone move /local/ gcrypt: --log-file /opt/rclone/logs/upload.log -v --exclude-from /opt/rclone/scripts/excludes --delete-empty-src-dirs --fast-list --drive-stop-on-upload-limit
+# Move older local files to the cloud. I added in 3 days to let files sit a few days so intro anaylsis can happen locally
+/usr/bin/rclone move /local/ gcrypt: --log-file /opt/rclone/logs/upload.log -v --exclude-from /opt/rclone/scripts/excludes --delete-empty-src-dirs --fast-list --drive-stop-on-upload-limit --min-age 3d
