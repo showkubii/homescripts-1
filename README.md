@@ -8,7 +8,7 @@ This is my configuration that works for me the best for my use case of an all in
 
 - Verizon Gigabit FIOS
 - Google Drive with an Encrypted Media Folder
-- Ubuntu Linux 18.04
+- Ubuntu Linux 20.04
 - Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
 - 32 GB of Memory
 - 250 GB SSD Storage for my root
@@ -16,7 +16,7 @@ This is my configuration that works for me the best for my use case of an all in
 
 ## My Workflow
 
-I use Sonarr and Radarr in conjuction with NZBGet and ruTorrent/rtorrent to get my media. 
+I use Sonarr and Radarr in conjuction with NZBGet and qBittorrent to get my media. 
 
 My normal flow is that they grab a file, download it and place it in `/gmedia` under the correct spot of `/gmedia/TV` `/gmedia/Movies` respectively and that is locally-stored underneath the covers.
 
@@ -31,12 +31,12 @@ My Ubuntu setup:
 [felix@gemini ~]$ lsb_release -a
 No LSB modules are available.
 Distributor ID:	Ubuntu
-Description:	Ubuntu 18.04.3 LTS
-Release:	18.04
-Codename:	bionic
+Description:	Ubuntu 20.04 LTS
+Release:	20.04
+Codename:	focal
 ```
 
-Fuse needs to be installed.
+Fuse needs to be installed for a rclone mount to function. allow-other is for my use and not recommended for shared servers as it allows any user to see a rclone mount. I am on a dedicated server that only I use so that is why I uncomment it.
 
 ```
 $ sudo apt install fuse
@@ -57,10 +57,10 @@ You need to make the change to /etc/fuse.conf to allow_other by uncommenting the
 	
 After fuse is installed, I install mergerfs. I would grab the proper package from the GitHub repository as the packages are out of date.
 
-My use case for mergerfs is that I always want to write to the local disk first and all my applications (Sonarr/Radarr/Plex/Emby/any application) all point directly to `/gmedia`. For them it's not relevant if the file is local or remote as they should act the same.
+My use case for mergerfs is that I always want to write to the local disk first and all my applications (Sonarr/Radarr/Plex/Emby/any application) all point directly to `/gmedia`. For them it's not relevant if the file is local or remote as they should act the same. 
 
   	/gmedia
-        /data/local (local mirror disk)
+        /local (local mirror disk)
         /GD (rclone mount)
   
 
