@@ -85,12 +85,11 @@ I found unionfs to not do what I wanted and I can't stand the hidden files so fo
 The following options make it always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
 ```bash
--o rw,async_read=false,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
+-o rw,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
 ```
 
 Important items:
 
-- async_read=false is needed as rclone uses sync_read.
 - use_ino is for hard linking with Sonarr/Radarr.
 - auto_cache has been replaced by cache.files=auto-full and uses memory for caching and helps out a bit if you have extra memory to spare.
 - category.action=all,category.create=ff says to always create directories / files on the first listed mount point and for my configuration that is my /data/local
