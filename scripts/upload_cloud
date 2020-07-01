@@ -13,7 +13,7 @@ export RCLONE_USER_AGENT
 LOCAL=/local
 
 #exit if running
-if [[ "`pidof -x $(basename $0) -o %PPID`" ]]; then exit; fi
+if [[ $(pidof -x "$(basename "$0")" -o %PPID) ]]; then exit; fi
 
 #check for excludes file
 if [[ ! -f /opt/rclone/scripts/excludes ]] ; then
