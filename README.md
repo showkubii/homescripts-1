@@ -6,8 +6,8 @@ This is my configuration that works for me the best for my use case of an all in
 
 ## Home Configuration
 
-- Verizon Gigabit FIOS
-- Google Drive with an Encrypted Media Folder
+- Verizon Gigabit Fios
+- Google Drive with an encrypted media folder
 - Ubuntu Linux 20.04
 - Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
 - 32 GB of Memory
@@ -18,9 +18,9 @@ This is my configuration that works for me the best for my use case of an all in
 
 I use Sonarr and Radarr in conjuction with NZBGet and qBittorrent to get my media. 
 
-My normal flow is that they grab a file, download it and place it in `/gmedia` under the correct spot of `/gmedia/TV` `/gmedia/Movies` respectively and that is locally-stored underneath the covers.
+My normal flow is that they grab a file, download it and place it in `/gmedia` under the correct spot of `/gmedia/TV` `/gmedia/Movies` respectively and that is locally stored underneath the covers.
 
-Each night, a rclone upload scripts moves from local to my Google Drive.  To achieve this, I use rclone to mount my Google Drive and mergerfs to combine a local disk and Google Drive together to provide a single access point for all the services.
+Every night, a rclone upload scripts moves files from local to my Google Drive. To achieve this, I use rclone to mount my Google Drive and mergerfs to combine a local disk and Google Drive together to provide a single access point for all the services.
 
 ## Rclone and MergerFS
 
@@ -36,7 +36,7 @@ Release:	20.04
 Codename:	focal
 ```
 
-Fuse needs to be installed for a rclone mount to function. allow-other is for my use and not recommended for shared servers as it allows any user to see a rclone mount. I am on a dedicated server that only I use so that is why I uncomment it.
+Fuse needs to be installed for a rclone mount to function. `allow-other` is for my use and not recommended for shared servers as it allows any user to see a rclone mount. I am on a dedicated server that only I use so that is why I uncomment it.
 
 ```
 $ sudo apt install fuse
@@ -80,7 +80,7 @@ My gmedia starts up items in order:
 ### mergerfs configuration
 This is located over here if you want to request help or compile from source [mergerfs@github](https://github.com/trapexit/mergerfs)
 
-I found unionfs to not do what I wanted and I can't stand the hidden files so for my, it's much easier to configure and use mergerfs.
+I found unionfs to not do what I wanted and I can't stand the hidden files so for my use, it's much easier to configure and use mergerfs.
 
 The following options make it always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
@@ -90,14 +90,14 @@ The following options make it always write to the first disk in the mount as wit
 
 Important items:
 
-- use_ino is for hard linking with Sonarr/Radarr.
-- auto_cache has been replaced by cache.files=auto-full and uses memory for caching and helps out a bit if you have extra memory to spare.
-- category.action=all,category.create=ff says to always create directories / files on the first listed mount point and for my configuration that is my /data/local
-- if you are reading directly from your rclone mount, you do not need to worry about any of the mergerfs settings.
+- `use_ino` is for hard linking with Sonarr/Radarr.
+- `auto_cache` has been replaced by `cache.files=auto-full` and uses memory for caching and helps out a bit if you have extra memory to spare.
+- `category.action=all`, `category.create=ff` says to always create directories / files on the first listed mount point and for my configuration that is `/data/local`
+- if you are reading directly from your rclone mount, you don't need to worry about any of mergerfs' settings.
 
 ## Scheduled Nightly Uploads
 
-I moved my files to my GD every ngiht via a cron job and an [upload cloud](https://github.com/animosity22/homescripts/blob/master/scripts/upload_cloud) script. This leverages an [excludes](https://github.com/animosity22/homescripts/blob/master/scripts/excludes) file which gets rid of partials and my torrent directory.
+I move my files to my GD every night via a cron job and an [upload cloud](https://github.com/animosity22/homescripts/blob/master/scripts/upload_cloud) script. This leverages an [excludes](https://github.com/animosity22/homescripts/blob/master/scripts/excludes) file which gets rid of partials and my torrent directory.
 
 This is my cron entry:
 
@@ -118,19 +118,19 @@ fs.inotify.max_user_watches=262144
 
 These tips and more for Linux can be found at the [Plex Forum Linux Tips](https://forums.plex.tv/t/linux-tips/276247)
 
-## Reducing API USage / Save Download Quota
+## Reducing API Usage / Save Download Quota
 There are a number of things I make sure are off in my setup to ensure that my API calls are lower and that I do not hit the download quotas for the day.
 
 ### Plex
-- **`Enable Thumbnail previews - Off`**_ - This creates a full read of the file to generate the preview and is set per library that is setup
-- **`Perform extensive media analysis during maintenance`** - This is under scheduled tasks and this does a full download and is ony used for bandwidth analysis with streaming.
+- `Enable Thumbnail previews` - Off - This creates a full read of the file to generate the preview and is set per library that is setup
+- `Perform extensive media analysis during maintenance` - Off - This is under scheduled tasks and this does a full download and is ony used for bandwidth analysis with streaming.
 
 ### Sonarr/Radarr
-- **`Analyse video files Off `**- This does full downloads to perform analysis and should be turned off as this happens frequently on library refreshes, if left on.
+- `Analyze video files` - Off - This does full downloads to perform analysis and should be turned off as this happens frequently on library refreshes if left on.
 
 ## Caddy Proxy Server
 
-I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. I have this as a toggle as I at times use Cloudflare for a CDN.
+I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. I have this as a toggle as I, at times use Cloudflare for a CDN.
 
 My configuration is [here](https://github.com/animosity22/homescripts/blob/master/PROXY.MD)
 
