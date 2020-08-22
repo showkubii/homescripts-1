@@ -16,12 +16,11 @@ ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --poll-interval 15s \
 --umask 002 \
 --user-agent animosityapp \
---rc \
---rc-addr :5572 \
+--rc --rc-addr :5572 \
 --vfs-read-chunk-size 32M
-ExecStop=/bin/fusermount -uz /GD
 ExecStartPost=/usr/bin/rclone rc vfs/refresh recursive=true --rc-addr 127.0.0.1:5572 _async=true
-Restart=on-failure
+ExecStop=/bin/fusermount -uz /GD
+Restart=always
 User=felix
 Group=felix
 
