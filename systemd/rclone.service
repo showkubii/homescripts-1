@@ -17,7 +17,7 @@ ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --log-level INFO \
 # Location of the log file
 --log-file /opt/rclone/logs/rclone.log \
-# I reduce the poll internval down to 15 seconds as this makes changes appear fast the API quotas per day are huge
+# I reduce the poll interval down to 15 seconds as this makes changes appear fast the API quotas per day are huge
 --poll-interval 15s \
 # This is setting the file permission on the mount to user and group have the same access and other can read
 --umask 002 \
