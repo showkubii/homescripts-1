@@ -12,6 +12,7 @@ This is my configuration that works for me the best for my use case of an all in
 - Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
 - 32 GB of Memory
 - 250 GB SSD Storage for my root
+- 1TB SSD for rclone Disk Caching
 - 6TB mirrored for staging
 
 ## My Workflow
