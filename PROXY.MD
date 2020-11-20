@@ -1,5 +1,41 @@
 # Caddy Proxy Server
 
+## Caddy Service File
+```bash
+[Unit]
+Description=Caddy HTTP/2 web server
+Documentation=https://caddyserver.com/docs
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Restart=on-failure
+
+; User and group the process will run as.
+User=felix
+Group=felix
+
+; Letsencrypt-issued certificates will be written to this directory.
+Environment=CLOUDFLARE_API_TOKEN=CLOUDFLARETOKENHERE
+Environment=GOOGLE_CLIENT_ID=YOURCLIENTID
+Environment=GOOGLE_CLIENT_SECRET=YOURSECRET
+Environment=JWT_SECRET=MADEUPSECRETKEY
+Environment=JWT_ISSUER=MADEUPISSUERKEY
+
+; Always set "-root" to something safe in case it gets forgotten in the Caddyfile.
+ExecStart=/usr/local/bin/caddy run --config /opt/caddy/Caddyfile
+ExecReload=/bin/kill -USR1 $MAINPID
+
+; Use graceful shutdown with a reasonable timeout
+KillMode=mixed
+KillSignal=SIGQUIT
+TimeoutStopSec=5s
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target
+```
+
 ## Google Authentication
 
 For now while Caddy updates the automated build process, I download from:
