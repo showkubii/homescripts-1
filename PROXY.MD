@@ -22,7 +22,6 @@ Environment=GOOGLE_CLIENT_SECRET=YOURSECRET
 Environment=JWT_SECRET=MADEUPSECRETKEY
 Environment=JWT_ISSUER=MADEUPISSUERKEY
 
-; Always set "-root" to something safe in case it gets forgotten in the Caddyfile.
 ExecStart=/usr/local/bin/caddy run --config /opt/caddy/Caddyfile
 ExecReload=/bin/kill -USR1 $MAINPID
 
