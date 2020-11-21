@@ -137,8 +137,8 @@ I use Caddy to server majority of my things as I plug directly into Google Authe
 
 My configuration is [here](https://github.com/animosity22/homescripts/blob/master/PROXY.MD).
 
-## OpenVPN Configuration
+## Wireguard Configuration
 
-For all my private traffic, I use [TorGuard](https://torguard.net/) as they support port forwarding and have very good support.
+For all my private traffic, I use [TorGuard](https://torguard.net/) as they support port forwarding and have very good support. I recently changed from OpenVPN to Wireguard as it is an easier setup and more effecient.
 
-[Setup and Configuration](https://github.com/animosity22/homescripts/blob/master/OPENVPN.MD).
+[Setup and Configuration](https://github.com/animosity22/homescripts/blob/master/WIREGUARD.MD).
