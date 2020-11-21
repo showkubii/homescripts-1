@@ -133,7 +133,7 @@ There are a number of things I make sure are off in my setup to ensure that my A
 
 ## Caddy Proxy Server
 
-I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth to make life easier. I have this as a toggle as I, at times use Cloudflare for a CDN.
+I use Caddy to server majority of my things as I plug directly into Google Authentication oAuth2 for authentication. I can toggle CDN on and off via the proxy in the DNS.
 
 My configuration is [here](https://github.com/animosity22/homescripts/blob/master/PROXY.MD).
 
