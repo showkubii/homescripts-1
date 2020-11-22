@@ -24,9 +24,11 @@ ListenPort = 51820
 Address = 10.13.76.217/24
 DNS = 8.8.8.8
 Table = off
-PostUp = ip rule add from 192.168.1.31 table 42; ip route add default dev %i table 42; iptables -t nat -A POSTROUTING -o %i -j MASQUERADE
-PostDown = ip rule del from 192.168.1.31 table 42; iptables -t nat -D POSTROUTING -o %i -j MASQUERADE
-
+# I use 192.168.1.31 for my additional IP. I use TCP port 42345 for my port forward. 
+# This allows the routing for .31 through the VPN and redirects the port forward to the
+# internal IP.
+PostUp = ip rule add from 192.168.1.31 table 42; ip route add default dev wg0 table 42; iptables -t nat -A POSTROUTING -o wg0 -j MASQUERADE;iptables -t nat -A PREROUTING -p tcp --dport 42345 -j DNAT --to 192.168.1.31
+PostDown = ip rule del from 192.168.1.31 table 42; iptables -t nat -D POSTROUTING -o wg0 -j MASQUERADE;iptables -t nat -D PREROUTING -p tcp --dport 42345 -j DNAT --to 192.168.1.31
 [Peer]
 PublicKey = PUBLICKEYHERE
 AllowedIPs = 0.0.0.0/0
