@@ -13,6 +13,15 @@ edit wg0.conf for your provider
 systemctl enable wg-quick@wg0
 wg0 show
 ```
+As root, you need to enable forwarding in /etc/sysctl.conf.
+
+```bash
+# Torguard VPN
+net.ipv4.ip_forward=1
+```
+
+You run "sysctl -p" to enable the forwarding change.
+
 
 My configuration file for wg0.conf looks like this as I use 192.168.1.31 for my VPN only IP.
 
