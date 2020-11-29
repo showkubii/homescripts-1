@@ -2,8 +2,9 @@
 
 This is my configuration that works for me the best for my use case of an all in one media server. This is not meant to be a tutorial by any means as it does require some knowledge to get setup. I'm happy to help out as best as I can and welcome any updates/fixes/pulls to make it better and more helpful to others.
 
-[Change Log](https://github.com/animosity22/homescripts/blob/master/Changes.MD)
+I use the latest rclone stable version downloaded direclty via the [script install](https://rclone.org/install/#script-installation) as package managers are frequently out of date and not maintained.
 
+[Change Log](https://github.com/animosity22/homescripts/blob/master/Changes.MD)
 ## Home Configuration
 
 - Verizon Gigabit Fios
