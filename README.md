@@ -89,7 +89,7 @@ I found unionfs to not do what I wanted and I can't stand the hidden files so fo
 The following options always write to the first disk in the mount as with post 2.25 there are some changes with the settings so I had to add a few things that were default before.
 
 ```bash
--o rw,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=partial,dropcacheonclose=true
+/usr/bin/mergerfs /local:/GD /gmedia -o rw,use_ino,allow_other,func.getattr=newest,category.action=all,category.create=ff,cache.files=auto-full
 ```
 
 Important items:
