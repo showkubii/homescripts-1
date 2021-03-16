@@ -110,7 +110,7 @@ This is my cron entry:
 12 3 * * * /opt/rclone/scripts/upload_cloud
 ```
 
-This is my only upload to my Google Drive minus subtitles. This happens at ~700GB per day, just enough to not hit the 750GB daily upload quota that is published by Google.
+This is my only upload to my Google Drive minus subtitles. This uses the `--drive-stop-on-upload-limit` flag to abort if we hit the 750GB daily upload quota that is published by Google. Alternatively, if you want to leave some buffer for other small uploads you can set an explicit limit with `--max-transfer 700G`.
 
 ## Plex Tweaks
 If you have a lot of directories and files, it might be helpful to increase the file watchers by adding this to your `/etc/sysctl.conf` and rebooting. I chose the number below as I wanted to have plenty of headroom over the default option.
