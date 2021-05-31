@@ -29,12 +29,12 @@ ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --rc-no-auth \
 # The local disk used for caching
 --cache-dir=/cache \
+# This is making a small chunk size to start as it'll build for streaming anyway. It reduces the download per file when media is added.
+--vfs-read-chunk-size 1M \
 # This is used for caching files to local disk for streaming
 --vfs-cache-mode full \
 # This limits the cache size to the value below
---vfs-cache-max-size 800G \
-# This adds a little buffer for read ahead
---vfs-read-ahead 256M \
+--vfs-cache-max-size 750G \
 # This limits the age in the cache if the size is reached and it removes the oldest files first
 --vfs-cache-max-age 1000h \
 # This sets a per file bandwidth control and I limit this to a little bigger than my largest bitrate I'd want to play
