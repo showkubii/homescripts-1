@@ -1,3 +1,5 @@
+# Change Log
+
 Here is the list of changes that I have to keep an idea of what has changed over time.
 
 * 5/31/2021 - Updated --vfs-read-chunk-size to 1M to reduce download bandwidth on initial library scans. This increases API usage on certain things, but API limits are 1 billion per day so does not seem to be an issue.
