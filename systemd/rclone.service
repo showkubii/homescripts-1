@@ -29,10 +29,16 @@ ExecStart=/usr/bin/rclone mount gcrypt: /GD \
 --rc-no-auth \
 # The local disk used for caching
 --cache-dir=/cache \
+#
 # If you are building a library from scratch and need to analyze a large amount of data, setting a very small read chunk size
 # will make things download a lot less data. So you can uncomment this section out.
 # If everything is already scanned, you can leave it at the default as it helps things startup a little faster.
-# --vfs-read-chunk-size 1M \
+#--vfs-read-chunk-size 1M \
+#
+# My quota per user / per 100 seconds is 10,000 requests. This can be found in your quota section.
+# This changes the sleep calls to something much lower to take advantage of the API boost.
+# change the min sleep from 100ms
+--drive-pacer-min-sleep 1ms
 # This is used for caching files to local disk for streaming
 --vfs-cache-mode full \
 # This limits the cache size to the value below
