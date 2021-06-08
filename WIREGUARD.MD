@@ -1,4 +1,4 @@
-# WIREHGUARD.MD
+# WIREGUARD.MD
 
 This is my configuration and setup for my Wireguard client on my Linux box. I setup one additional IP address and use that IP to bind to my specific clients and only that client gets routed through the VPN.
 
